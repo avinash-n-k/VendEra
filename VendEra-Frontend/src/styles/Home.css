@@ -1,0 +1,271 @@
+.home-page {
+    min-height: calc(100vh - 72px);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 90px 30px;
+    box-sizing: border-box;
+    background: #FAFAF8;
+    color: #20242C;
+}
+
+/* Background glow */
+.home-glow {
+    display: none;
+}
+
+/* Main content */
+.home-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1050px;
+    text-align: center;
+}
+
+/* Eyebrow */
+.home-eyebrow {
+    margin: 0 0 18px 0;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #E8753D;
+}
+
+/* Main heading */
+.home-content h1 {
+    max-width: 800px;
+    margin: 0 auto 22px auto;
+    font-size: 56px;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    font-weight: 700;
+    color: #172033;
+}
+
+.home-content h1 span {
+    color: #E8753D;
+}
+
+/* Description */
+.home-description {
+    max-width: 650px;
+    margin: 0 auto 35px auto;
+    font-size: 17px;
+    line-height: 1.7;
+    color: #707782;
+}
+
+/* Shop button */
+.home-shop-button {
+    display: inline-block;
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 8px;
+    background: #E8753D;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 700;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-shop-button:hover {
+    transform: translateY(-2px);
+    background: #d96732;
+    box-shadow:
+        0 10px 25px rgba(232, 117, 61, 0.18);
+}
+
+/* Feature section */
+.home-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 70px;
+}
+
+/* Feature card */
+.home-feature {
+    padding: 28px 24px;
+    background: #FFFFFF;
+    border: 1px solid #e4e1db;
+    border-radius: 14px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.045);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-feature:hover {
+    transform: translateY(-4px);
+    border-color: #d9d4cc;
+    box-shadow:
+        0 15px 35px rgba(23, 32, 51, 0.07);
+}
+
+/* Feature icon */
+.home-feature-icon {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #E8753D;
+}
+
+/* Feature heading */
+.home-feature h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #172033;
+}
+
+/* Feature description */
+.home-feature p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #707782;
+}
+
+/* Admin actions */
+.home-admin-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 55px;
+}
+
+/* Admin action card */
+.home-action-card {
+    display: block;
+    padding: 28px 24px;
+    background: #FFFFFF;
+    border: 1px solid #e4e1db;
+    border-radius: 14px;
+    text-align: left;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.045);
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.home-action-card:hover {
+    transform: translateY(-4px);
+    border-color: #d9d4cc;
+    box-shadow:
+        0 15px 35px rgba(23, 32, 51, 0.07);
+}
+
+/* Admin action heading */
+.home-action-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+    color: #172033;
+}
+
+/* Admin action description */
+.home-action-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #707782;
+}
+
+
+/* =========================
+   TABLET
+   ========================= */
+
+@media (max-width: 900px) {
+
+    .home-page {
+        padding: 70px 24px;
+    }
+
+    .home-content h1 {
+        font-size: 46px;
+        letter-spacing: -1.5px;
+    }
+
+    .home-description {
+        font-size: 16px;
+        max-width: 600px;
+    }
+
+    .home-features,
+    .home-admin-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .home-page {
+        min-height: calc(100vh - 60px);
+        padding: 50px 16px;
+    }
+
+    .home-content {
+        max-width: 100%;
+    }
+
+    .home-eyebrow {
+        font-size: 11px;
+        letter-spacing: 2px;
+        margin-bottom: 14px;
+    }
+
+    .home-content h1 {
+        font-size: 36px;
+        line-height: 1.15;
+        letter-spacing: -1px;
+        margin-bottom: 18px;
+    }
+
+    .home-description {
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 28px;
+    }
+
+    .home-shop-button {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+        padding: 14px 20px;
+    }
+
+    .home-features,
+    .home-admin-actions {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 45px;
+    }
+
+    .home-feature,
+    .home-action-card {
+        padding: 22px 20px;
+    }
+
+    .home-feature h3,
+    .home-action-card h3 {
+        font-size: 17px;
+    }
+
+    .home-feature p,
+    .home-action-card p {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,33 @@
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Frontend dependencies
+VendEra-Frontend/node_modules/
+
+# Frontend build
+VendEra-Frontend/dist/
+
+# Java / Maven build output
+**/target/
+
+# Java compiled files
+**/*.class
+
+# IDE files
+**/.classpath
+**/.project
+**/.settings/
+**/.metadata/
+.vscode/
+
+# Logs
+**/*.log
+
+# Unused Config Repository
+VendEra-Backend/config-repo/
+**/BOOT-INF/
+
+# Unused Config Server
+VendEra-Backend/Config-Server/

@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS order_db_outbox;
+CREATE DATABASE IF NOT EXISTS product_db_outbox;
+CREATE DATABASE IF NOT EXISTS payment_db_outbox;

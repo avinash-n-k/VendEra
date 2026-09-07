@@ -1,0 +1,113 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+
+    ports:
+      - "3307:3306"
+
+    environment:
+      MYSQL_ROOT_PASSWORD: tiger
+
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+
+
+  kafka:
+    image: apache/kafka:latest
+    container_name: kafka
+
+    ports:
+      - "29092:29092"
+
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+
+      KAFKA_LISTENERS: INTERNAL://0.0.0.0:9092,EXTERNAL://0.0.0.0:29092,CONTROLLER://0.0.0.0:9093
+
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:29092
+
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
+
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+
+      KAFKA_NUM_PARTITIONS: 3
+
+  order-service:
+    image: order-service:latest
+    container_name: order-service
+
+    ports:
+      - "8763:8763"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/order_db_outbox
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: tiger
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+
+    depends_on:
+      - mysql
+      - kafka
+      - eureka
+
+  eureka:
+    image: eureka-server:latest
+    container_name: eureka
+
+    ports:
+      - "8761:8761"
+
+  product-service:
+    image: product-service:latest
+    container_name: product-service
+
+    ports:
+      - "8762:8762"
+
+    environment:
+      SPRING_CONFIG_IMPORT: ""
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_db_outbox
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: tiger
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+
+    depends_on:
+      - mysql
+      - kafka
+      - eureka
+  
+  payment-service:
+    image: payment-service:latest
+    container_name: payment-service
+
+    ports:
+      - "8764:8764"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/payment_db_outbox
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: tiger
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+
+    depends_on:
+      - mysql
+      - kafka
+      - eureka

@@ -1,0 +1,313 @@
+.admin-payments-page {
+    min-height: calc(100vh - 70px);
+    padding: 55px 7% 90px;
+
+    background: #FAFAF8;
+}
+
+.admin-payments-container {
+    max-width: 1050px;
+    margin: 0 auto;
+}
+
+
+/* BACK BUTTON */
+
+.admin-payments-back-button {
+    border: none;
+    background: transparent;
+
+    color: #707782;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 42px;
+
+    transition: color 0.2s ease;
+}
+
+.admin-payments-back-button:hover {
+    color: #172033;
+}
+
+
+/* HEADER */
+
+.admin-payments-header {
+    margin-bottom: 40px;
+}
+
+.admin-payments-eyebrow {
+    margin: 0 0 12px;
+
+    color: #E8753D;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.admin-payments-header h1 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: clamp(42px, 6vw, 64px);
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.admin-payments-header h1 span {
+    color: #E8753D;
+}
+
+.admin-payments-header p:last-child {
+    margin-top: 18px;
+
+    color: #707782;
+
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+
+/* ERROR */
+
+.admin-payments-error {
+    padding: 15px 18px;
+
+    border: 1px solid #efcaca;
+    border-radius: 10px;
+
+    background: #fff4f4;
+    color: #c53030;
+
+    margin-bottom: 25px;
+}
+
+
+/* EMPTY */
+
+.admin-payments-empty {
+    padding: 55px 30px;
+
+    border: 1px dashed #d7d4ce;
+    border-radius: 14px;
+
+    background: #FFFFFF;
+
+    text-align: center;
+}
+
+.admin-payments-empty h2 {
+    margin: 0;
+
+    color: #172033;
+}
+
+.admin-payments-empty p {
+    margin-top: 10px;
+
+    color: #707782;
+}
+
+
+/* PAYMENT CARD */
+
+.admin-payment-card {
+    padding: 28px 30px;
+
+    margin-bottom: 22px;
+
+    border: 1px solid #e4e1db;
+    border-radius: 14px;
+
+    background: #FFFFFF;
+
+    box-shadow: 0 10px 30px rgba(23, 32, 51, 0.055);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.admin-payment-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #d9d4cc;
+
+    box-shadow: 0 16px 38px rgba(23, 32, 51, 0.08);
+}
+
+
+/* HEADER */
+
+.admin-payment-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.admin-payment-label {
+    margin: 0 0 6px;
+
+    color: #8b9098;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.admin-payment-card-header h2 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 25px;
+}
+
+
+/* STATUS */
+
+.admin-payment-status {
+    padding: 7px 13px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
+.admin-payment-status.success {
+    color: #16803d;
+    background: #edf9f1;
+    border: 1px solid #bfe8cd;
+}
+
+.admin-payment-status.pending {
+    color: #a66b00;
+    background: #fff8e8;
+    border: 1px solid #f1d99a;
+}
+
+.admin-payment-status.failed {
+    color: #c53030;
+    background: #fff4f4;
+    border: 1px solid #efcaca;
+}
+
+
+/* MAIN INFO */
+
+.admin-payment-main-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 18px;
+
+    margin-top: 26px;
+}
+
+.admin-payment-info-box {
+    padding: 18px;
+
+    border: 1px solid #e8e5df;
+    border-radius: 10px;
+
+    background: #FAFAF8;
+}
+
+.admin-payment-info-box span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #8b9098;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.admin-payment-info-box strong {
+    color: #20242C;
+
+    font-size: 17px;
+}
+
+
+/* DIVIDER */
+
+.admin-payment-divider {
+    height: 1px;
+
+    margin: 24px 0;
+
+    background: #e8e5df;
+}
+
+
+/* RAZORPAY DETAILS */
+
+.admin-payment-technical {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 25px;
+}
+
+.admin-payment-detail {
+    min-width: 0;
+}
+
+.admin-payment-detail span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #8b9098;
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.admin-payment-detail strong {
+    display: block;
+
+    color: #536074;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .admin-payments-page {
+        padding: 40px 20px 70px;
+    }
+
+    .admin-payment-card {
+        padding: 22px;
+    }
+
+    .admin-payment-main-info,
+    .admin-payment-technical {
+        grid-template-columns: 1fr;
+    }
+
+}

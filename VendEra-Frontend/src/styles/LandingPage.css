@@ -1,0 +1,192 @@
+.landing-page {
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 60px 20px;
+    box-sizing: border-box;
+
+    background: #FAFAF8;
+    color: #20242C;
+}
+
+
+/* Background glow */
+
+.landing-glow {
+    display: none;
+}
+
+
+/* Main content */
+
+.landing-content {
+    position: relative;
+    z-index: 1;
+
+    width: 100%;
+    max-width: 850px;
+
+    text-align: center;
+}
+
+
+/* Brand */
+
+.landing-brand {
+    display: inline-block;
+
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+    color: #E8753D;
+
+    margin-bottom: 30px;
+}
+
+
+/* Small heading */
+
+.landing-eyebrow {
+    margin: 0 0 18px 0;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+
+    color: #E8753D;
+}
+
+
+/* Main heading */
+
+.landing-content h1 {
+    margin: 0 auto 25px auto;
+
+    max-width: 800px;
+
+    font-size: 64px;
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -2px;
+
+    color: #172033;
+}
+
+.landing-content h1 span {
+    color: #E8753D;
+}
+
+
+/* Description */
+
+.landing-description {
+    max-width: 650px;
+
+    margin: 0 auto 38px auto;
+
+    font-size: 18px;
+    line-height: 1.7;
+
+    color: #707782;
+}
+
+
+/* Buttons */
+
+.landing-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+
+    margin-bottom: 45px;
+}
+
+.landing-buttons a {
+    text-decoration: none;
+
+    padding: 14px 30px;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Login */
+
+.landing-login {
+    background: #FFFFFF;
+    color: #172033;
+
+    border: 1px solid #d8d9dc;
+}
+
+.landing-login:hover {
+    transform: translateY(-2px);
+
+    background: #FFFFFF;
+
+    border-color: #172033;
+
+    box-shadow:
+        0 8px 20px rgba(23, 32, 51, 0.08);
+}
+
+
+/* Create account */
+
+.landing-register {
+    background: #E8753D;
+
+    color: #FFFFFF;
+
+    border: 1px solid #E8753D;
+}
+
+.landing-register:hover {
+    transform: translateY(-2px);
+
+    background: #d96832;
+
+    border-color: #d96832;
+
+    box-shadow:
+        0 8px 20px rgba(232, 117, 61, 0.20);
+}
+
+
+/* Feature row */
+
+.landing-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+
+    color: #707782;
+
+    font-size: 14px;
+}
+
+.landing-features div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.landing-features span {
+    color: #E8753D;
+}
