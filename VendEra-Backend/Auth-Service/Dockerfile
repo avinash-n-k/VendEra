@@ -2,6 +2,6 @@ FROM eclipse-temurin:17-jre
 
 COPY target/*.jar app.jar
 
-EXPOSE 8764
+EXPOSE 8766
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
