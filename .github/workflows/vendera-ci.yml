@@ -33,5 +33,5 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: Build Auth Service
-        working-directory: ./Vendera-Backend/Auth-Service
+        working-directory: ./VendEra-Backend/Auth-Service
         run: mvn clean package -DskipTests
