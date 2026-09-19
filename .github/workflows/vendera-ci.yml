@@ -47,3 +47,7 @@ jobs:
       - name: Build API Gateway
         working-directory: ./VendEra-Backend/Api-Gateway
         run: mvn clean package -DskipTests
+      
+      - name: Build Eureka Docker Image
+        working-directory: ./VendEra-Backend/Eureka-Server
+        run: docker build -t vendera-eureka:ci .
