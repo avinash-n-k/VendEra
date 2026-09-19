@@ -1,14 +1,14 @@
-name: Vendera CI
+name: VendEra CI
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    test-ci:
-        runs-on: ubuntu-latest
+  test-ci:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Say hello 
-              run: echo "Vendera CI pipeline is Working!"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
