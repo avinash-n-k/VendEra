@@ -51,3 +51,24 @@ jobs:
       - name: Build Eureka Docker Image
         working-directory: ./VendEra-Backend/Eureka-Server
         run: docker build -t vendera-eureka:ci .
+
+      - name: Build Product Docker Image
+        working-directory: ./VendEra-Backend/Product-Service
+        run: docker build -t vendera-product:ci .
+
+      - name: Build Auth Docker Image
+        working-directory: ./VendEra-Backend/Auth-Service
+        run: docker build -t vendera-auth:ci .
+
+      - name: Build Order Docker Image
+        working-directory: ./VendEra-Backend/Order-Service
+        run: docker build -t vendera-order:ci .
+
+      - name: Build Payment Docker Image
+        working-directory: ./VendEra-Backend/Payment-Service
+        run: docker build -t vendera-payment:ci .
+
+      - name: Build API Gateway Docker Image
+        working-directory: ./VendEra-Backend/Api-Gateway
+        run: docker build -t vendera-api-gateway:ci .
+
