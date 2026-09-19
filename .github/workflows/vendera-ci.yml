@@ -17,6 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::121316354144:role/Vendera-GitHubActions-ECR
+          aws-region: ap-south-1
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
