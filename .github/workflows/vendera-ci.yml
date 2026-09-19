@@ -17,26 +17,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: Show OIDC Claims
-        run: |
-          RESPONSE=$(curl -sS \
-            -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            -H "Accept: application/json; api-version=2.0" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com")
+      # - name: Show OIDC Claims
+      #   run: |
+      #     RESPONSE=$(curl -sS \
+      #       -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+      #       -H "Accept: application/json; api-version=2.0" \
+      #       "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com")
 
-          ID_TOKEN=$(echo "$RESPONSE" | jq -r '.value')
+      #     ID_TOKEN=$(echo "$RESPONSE" | jq -r '.value')
 
-          echo "OIDC subject:"
-          echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.sub'
+      #     echo "OIDC subject:"
+      #     echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.sub'
 
-          echo "OIDC audience:"
-          echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.aud'
+      #     echo "OIDC audience:"
+      #     echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.aud'
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
           role-to-assume: arn:aws:iam::121316354144:role/Vendera-GitHubActions-ECR
           aws-region: ap-south-1
+
+      - name: Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region ap-south-1 | \
+          docker login --username AWS --password-stdin \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com
 
       - name: Set up Java
         uses: actions/setup-java@v4
