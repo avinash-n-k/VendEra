@@ -31,3 +31,7 @@ jobs:
       - name: Build Product Service
         working-directory: ./VendEra-Backend/Product-Service
         run: mvn clean package -DskipTests
+
+      - name: Build Auth Service
+        working-directory: ./Vendera-Backend/Auth-Service
+        run: mvn clean package -DskipTests
