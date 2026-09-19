@@ -15,85 +15,68 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.AllArgsConstructor;
 
-
-
-
-
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
 public class SecurityConfig {
-	
-	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-	
-	
-	
-	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
 
-	    CorsConfiguration configuration = new CorsConfiguration();
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-	    configuration.setAllowedOrigins(
-	        List.of("http://localhost:5173","http://localhost:5174")
-	    );
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
 
-	    configuration.setAllowedMethods(
-	        List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-	    );
+        CorsConfiguration configuration = new CorsConfiguration();
 
-	    configuration.setAllowedHeaders(
-	        List.of("*")
-	    );
+        configuration.setAllowedOrigins(
+                List.of(
+                        "http://localhost:5173",
+                        "http://localhost:5174",
+                        "http://vendera-frontend-2026-1318.s3-website.ap-south-1.amazonaws.com"));
 
-	    configuration.setAllowCredentials(true);
+        configuration.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
-	    UrlBasedCorsConfigurationSource source =
-	        new UrlBasedCorsConfigurationSource();
+        configuration.setAllowedHeaders(
+                List.of("*"));
 
-	    source.registerCorsConfiguration("/**", configuration);
+        configuration.setAllowCredentials(true);
 
-	    return source;
-	}
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
-    	
-    	
-    	
 
         return http
-        		
+
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                
-                .authorizeHttpRequests(auth ->
-                auth
-                    .requestMatchers(
-                        "/user/login",
-                        "/user/register",
-                        "/user/refresh",
-                        "/user/logout"
-                    ).permitAll()
 
-                    .requestMatchers("/admin/**")
-                    .hasRole("ADMIN")
-                    
-                    .requestMatchers(request -> request.getMethod().equals("OPTIONS"))
-                    .permitAll()
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/user/login",
+                                "/user/register",
+                                "/user/refresh",
+                                "/user/logout")
+                        .permitAll()
 
-                    .anyRequest().authenticated()
-            )
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
 
-                .oauth2ResourceServer(oauth2 ->
-                    oauth2
-                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                    .jwt(jwt ->
-                        jwt.jwtAuthenticationConverter(
-                            new JwtAuthenticationConverter()
-                        )
-                    )
-                )
+                        .requestMatchers(request -> request.getMethod().equals("OPTIONS"))
+                        .permitAll()
+
+                        .anyRequest().authenticated())
+
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(
+                                new JwtAuthenticationConverter())))
 
                 .build();
     }

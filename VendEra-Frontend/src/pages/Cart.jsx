@@ -119,7 +119,7 @@ function Cart({ cart, setCart }) {
 
         currency: "INR",
 
-        name: "VendEra ",
+        name: "VendEra",
 
         description: "Order Payment",
 
