@@ -82,6 +82,11 @@ jobs:
       - name: Build Eureka Docker Image
         working-directory: ./VendEra-Backend/Eureka-Server
         run: docker build -t vendera-eureka:ci .
+      
+      - name: Tag Eureka Image for ECR
+        run: |
+          docker tag vendera-eureka:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
 
       - name: Build Product Docker Image
         working-directory: ./VendEra-Backend/Product-Service
