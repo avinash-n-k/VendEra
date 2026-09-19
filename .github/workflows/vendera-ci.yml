@@ -19,10 +19,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Install Maven
+        run: |
+         sudo apt-get update
+         sudo apt-get install -y maven
+
       - name: Build Eureka Server
         working-directory: ./VendEra-Backend/Eureka-Server
-        run: ./mvnw clean package -DskipTests
-            
+        run: mvn clean package -DskipTests
+
       - name: Build Product Service
         working-directory: ./VendEra-Backend/Product-Service
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
