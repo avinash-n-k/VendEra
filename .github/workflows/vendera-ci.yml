@@ -35,3 +35,15 @@ jobs:
       - name: Build Auth Service
         working-directory: ./VendEra-Backend/Auth-Service
         run: mvn clean package -DskipTests
+      
+      - name: Build Order Service
+        working-directory: ./VendEra-Backend/Order-Service
+        run: mvn clean package -DskipTests
+
+      - name: Build Payment Service
+        working-directory: ./VendEra-Backend/Payment-Service
+        run: mvn clean package -DskipTests
+
+      - name: Build API Gateway
+        working-directory: ./VendEra-Backend/Api-Gateway
+        run: mvn clean package -DskipTests
