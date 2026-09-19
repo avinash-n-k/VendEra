@@ -22,3 +22,7 @@ jobs:
       - name: Build Eureka Server
         working-directory: ./VendEra-Backend/Eureka-Server
         run: ./mvnw clean package -DskipTests
+            
+      - name: Build Product Service
+        working-directory: ./VendEra-Backend/Product-Service
+        run: ./mvnw clean package -DskipTests
