@@ -88,6 +88,11 @@ jobs:
           docker tag vendera-eureka:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
 
+      - name: Push Eureka Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
+
       - name: Build Product Docker Image
         working-directory: ./VendEra-Backend/Product-Service
         run: docker build -t vendera-product:ci .
