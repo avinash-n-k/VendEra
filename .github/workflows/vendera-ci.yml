@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-permissions: 
+permissions:
   id-token: write
   contents: read
 
@@ -14,23 +14,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      # =========================
+      # 1. Checkout
+      # =========================
+
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      # - name: Show OIDC Claims
-      #   run: |
-      #     RESPONSE=$(curl -sS \
-      #       -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-      #       -H "Accept: application/json; api-version=2.0" \
-      #       "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=sts.amazonaws.com")
 
-      #     ID_TOKEN=$(echo "$RESPONSE" | jq -r '.value')
 
-      #     echo "OIDC subject:"
-      #     echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.sub'
-
-      #     echo "OIDC audience:"
-      #     echo "$ID_TOKEN" | cut -d '.' -f2 | tr '_-' '/+' | base64 -d 2>/dev/null | jq -r '.aud'
+      # =========================
+      # 2. AWS Authentication
+      # =========================
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6
@@ -44,6 +39,11 @@ jobs:
           docker login --username AWS --password-stdin \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com
 
+
+      # =========================
+      # 3. Java + Maven
+      # =========================
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -52,8 +52,13 @@ jobs:
 
       - name: Install Maven
         run: |
-         sudo apt-get update
-         sudo apt-get install -y maven
+          sudo apt-get update
+          sudo apt-get install -y maven
+
+
+      # =========================
+      # 4. Build ALL JARs
+      # =========================
 
       - name: Build Eureka Server
         working-directory: ./VendEra-Backend/Eureka-Server
@@ -66,7 +71,7 @@ jobs:
       - name: Build Auth Service
         working-directory: ./VendEra-Backend/Auth-Service
         run: mvn clean package -DskipTests
-      
+
       - name: Build Order Service
         working-directory: ./VendEra-Backend/Order-Service
         run: mvn clean package -DskipTests
@@ -78,20 +83,15 @@ jobs:
       - name: Build API Gateway
         working-directory: ./VendEra-Backend/Api-Gateway
         run: mvn clean package -DskipTests
-      
+
+
+      # =========================
+      # 5. Build ALL Docker Images
+      # =========================
+
       - name: Build Eureka Docker Image
         working-directory: ./VendEra-Backend/Eureka-Server
         run: docker build -t vendera-eureka:ci .
-      
-      - name: Tag Eureka Image for ECR
-        run: |
-          docker tag vendera-eureka:ci \
-          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
-
-      - name: Push Eureka Image to ECR
-        run: |
-          docker push \
-          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
 
       - name: Build Product Docker Image
         working-directory: ./VendEra-Backend/Product-Service
@@ -113,3 +113,92 @@ jobs:
         working-directory: ./VendEra-Backend/Api-Gateway
         run: docker build -t vendera-api-gateway:ci .
 
+
+      # =========================
+      # 6. Tag + Push Eureka
+      # =========================
+
+      - name: Tag Eureka Image for ECR
+        run: |
+          docker tag vendera-eureka:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
+
+      - name: Push Eureka Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
+
+
+      # =========================
+      # 7. Tag + Push Product
+      # =========================
+
+      - name: Tag Product Image for ECR
+        run: |
+          docker tag vendera-product:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest
+
+      - name: Push Product Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest
+
+
+      # =========================
+      # 8. Tag + Push Auth
+      # =========================
+
+      - name: Tag Auth Image for ECR
+        run: |
+          docker tag vendera-auth:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest
+
+      - name: Push Auth Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest
+
+
+      # =========================
+      # 9. Tag + Push Order
+      # =========================
+
+      - name: Tag Order Image for ECR
+        run: |
+          docker tag vendera-order:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest
+
+      - name: Push Order Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest
+
+
+      # =========================
+      # 10. Tag + Push Payment
+      # =========================
+
+      - name: Tag Payment Image for ECR
+        run: |
+          docker tag vendera-payment:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest
+
+      - name: Push Payment Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest
+
+
+      # =========================
+      # 11. Tag + Push API Gateway
+      # =========================
+
+      - name: Tag API Gateway Image for ECR
+        run: |
+          docker tag vendera-api-gateway:ci \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest
+
+      - name: Push API Gateway Image to ECR
+        run: |
+          docker push \
+          121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest
