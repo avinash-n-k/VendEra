@@ -202,3 +202,15 @@ jobs:
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest
+
+      # =========================
+      # 12. Test SSM Deployment Connection
+      # =========================
+
+      - name: Test SSM Connection to EC2
+        run: |
+          aws ssm send-command \
+            --region ap-south-1 \
+            --document-name "AWS-RunShellScript" \
+            --instance-ids "i-004b11983589d3e6" \
+            --parameters 'commands=["echo Hello from GitHub Actions"]'
