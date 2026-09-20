@@ -85,7 +85,7 @@ public class UserService {
 		
 		Authentication authentication=authenticationManager.authenticate(token);
 		System.out.println(authentication.isAuthenticated());
-		User user=userRepo.findByEmail(userLogin.getEmail()).orElseThrow(()->new UserNotFoundException("User Doesn't Exist"));
+		User user=userRepo.findByEmail(userLogin.getEmail()).orElseThrow(()->new UserNotFoundException("Invalid Credentials"));
 		
 		String accessToken=jwtService.generateAccessToken(userLogin.getEmail(),user.getRole());
 		
