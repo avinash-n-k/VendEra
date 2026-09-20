@@ -118,12 +118,12 @@ jobs:
       # 6. Tag + Push Eureka
       # =========================
 
-      - name: Tag Eureka Image for ECR
+      - name: Tag Eureka Image
         run: |
           docker tag vendera-eureka:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
 
-      - name: Push Eureka Image to ECR
+      - name: Push Eureka Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest
@@ -133,12 +133,12 @@ jobs:
       # 7. Tag + Push Product
       # =========================
 
-      - name: Tag Product Image for ECR
+      - name: Tag Product Image
         run: |
           docker tag vendera-product:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest
 
-      - name: Push Product Image to ECR
+      - name: Push Product Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest
@@ -148,12 +148,12 @@ jobs:
       # 8. Tag + Push Auth
       # =========================
 
-      - name: Tag Auth Image for ECR
+      - name: Tag Auth Image
         run: |
           docker tag vendera-auth:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest
 
-      - name: Push Auth Image to ECR
+      - name: Push Auth Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest
@@ -163,12 +163,12 @@ jobs:
       # 9. Tag + Push Order
       # =========================
 
-      - name: Tag Order Image for ECR
+      - name: Tag Order Image
         run: |
           docker tag vendera-order:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest
 
-      - name: Push Order Image to ECR
+      - name: Push Order Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest
@@ -178,12 +178,12 @@ jobs:
       # 10. Tag + Push Payment
       # =========================
 
-      - name: Tag Payment Image for ECR
+      - name: Tag Payment Image
         run: |
           docker tag vendera-payment:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest
 
-      - name: Push Payment Image to ECR
+      - name: Push Payment Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest
@@ -193,31 +193,68 @@ jobs:
       # 11. Tag + Push API Gateway
       # =========================
 
-      - name: Tag API Gateway Image for ECR
+      - name: Tag API Gateway Image
         run: |
           docker tag vendera-api-gateway:ci \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest
 
-      - name: Push API Gateway Image to ECR
+      - name: Push API Gateway Image
         run: |
           docker push \
           121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest
 
 
       # =========================
-      # 12. Deploy Eureka to EC2
+      # 12. Deploy ALL Services
       # =========================
 
-      - name: Deploy Eureka to EC2
+      - name: Deploy All Services to EC2
         run: |
           aws ssm send-command \
             --region ap-south-1 \
             --document-name "AWS-RunShellScript" \
             --instance-ids "i-004b11983589d3e6b" \
             --parameters 'commands=[
+
               "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 121316354144.dkr.ecr.ap-south-1.amazonaws.com",
+
               "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest",
+
               "docker stop vendera-eureka-ecr || true",
               "docker rm vendera-eureka-ecr || true",
-              "docker run -d --name vendera-eureka-ecr --network vendera-net -p 8761:8761 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest"
+              "docker stop vendera-eureka || true",
+              "docker rm vendera-eureka || true",
+
+              "docker stop vendera-product || true",
+              "docker rm vendera-product || true",
+
+              "docker stop vendera-auth || true",
+              "docker rm vendera-auth || true",
+
+              "docker stop vendera-order || true",
+              "docker rm vendera-order || true",
+
+              "docker stop vendera-payment || true",
+              "docker rm vendera-payment || true",
+
+              "docker stop vendera-api-gateway || true",
+              "docker rm vendera-api-gateway || true",
+
+              "docker run -d --name vendera-eureka --network vendera-net -p 8761:8761 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest",
+
+              "docker run -d --name vendera-product --network vendera-net --env-file /home/ec2-user/Vendera/Product/product.env -p 8762:8762 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-product:latest",
+
+              "docker run -d --name vendera-auth --network vendera-net --env-file /home/ec2-user/Vendera/Auth/auth.env -p 8766:8766 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-auth:latest",
+
+              "docker run -d --name vendera-order --network vendera-net --env-file /home/ec2-user/Vendera/Order/order.env -p 8763:8763 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-order:latest",
+
+              "docker run -d --name vendera-payment --network vendera-net --env-file /home/ec2-user/Vendera/Payment/payment.env -p 8764:8764 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-payment:latest",
+
+              "docker run -d --name vendera-api-gateway --network vendera-net --env-file /home/ec2-user/Vendera/Api-Gateway/gateway.env -p 8080:8080 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-api-gateway:latest"
+
             ]'
