@@ -205,13 +205,19 @@ jobs:
 
 
       # =========================
-      # 12. Pull Eureka Image on EC2
+      # 12. Deploy Eureka to EC2
       # =========================
 
-      - name: Pull Eureka Image on EC2
+      - name: Deploy Eureka to EC2
         run: |
           aws ssm send-command \
             --region ap-south-1 \
             --document-name "AWS-RunShellScript" \
             --instance-ids "i-004b11983589d3e6b" \
-            --parameters 'commands=["aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 121316354144.dkr.ecr.ap-south-1.amazonaws.com","docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest"]'
+            --parameters 'commands=[
+              "aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 121316354144.dkr.ecr.ap-south-1.amazonaws.com",
+              "docker pull 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest",
+              "docker stop vendera-eureka-ecr || true",
+              "docker rm vendera-eureka-ecr || true",
+              "docker run -d --name vendera-eureka-ecr --network vendera-net -p 8761:8761 121316354144.dkr.ecr.ap-south-1.amazonaws.com/vendera-eureka:latest"
+            ]'
