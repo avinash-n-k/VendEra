@@ -212,5 +212,5 @@ jobs:
           aws ssm send-command \
             --region ap-south-1 \
             --document-name "AWS-RunShellScript" \
-            --instance-ids "i-004b11983589d3e6" \
+            --instance-ids "i-004b11983589d3e6b" \
             --parameters 'commands=["echo Hello from GitHub Actions"]'
